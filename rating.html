@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul class="comment">
+        <li>☆</li>
+        <li>☆</li>
+        <li>☆</li>
+        <li>☆</li>
+        <li>☆</li>
+    </ul>
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+
+            var wjx_k = "☆";
+            var wjx_s = "★";
+            var $li = $(".comment>li");
+            $li.on("mouseenter", function () {
+
+
+                //还返回了一个jq对象
+
+                //prevAll的时候，操作的确返回了一个jq对象，但是内部的DOM对象已经变成了前面的兄弟。
+
+                //end()可以把jq对象返回成上一次的状态。
+                $(this).html(wjx_s);
+                $(this).prevAll().html(wjx_s);
+                $(this).nextAll().text(wjx_k); //这里不能继续链式编程了
+
+            });
+
+            //给ul注册离开事件的时候，让所有的li都变成空心
+            $(".comment").on("mouseleave", function () {
+                $li.html(wjx_k);
+
+
+                $("li.now").text(wjx_s).prevAll().text(wjx_s);
+
+            });
+
+
+            $li.on("click", function () {
+                //点击要做什么？  留下一个标记： class=now
+                $(this).addClass("now").siblings().removeClass("now");
+
+            });
+
+        });
+    </script>
+</body>
+
+</html>
